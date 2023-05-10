@@ -167,7 +167,7 @@ func Search(a, b string) int {
 	}
 
 	for i := 0; i < len(ad)-len(bd)+1; i++ {
-		if bytes.Equal([]byte(string(ad[i:i+len(bd)])), []byte(string(bd))) {
+		if string(ad[i:i+len(bd)]) == string(bd) {
 			return i
 		}
 	}
