@@ -162,7 +162,17 @@ func Search(a, b string) int {
 	ad := Disassemble(a)
 	bd := Disassemble(b)
 
-	return bytes.Index([]byte(string(ad)), []byte(string(bd)))
+	if len(ad) < len(bd) {
+		return -1
+	}
+
+	for i := 0; i < len(ad)-len(bd)+1; i++ {
+		if bytes.Equal([]byte(string(ad[i:i+len(bd)])), []byte(string(bd))) {
+			return i
+		}
+	}
+
+	return -1
 }
 
 func IsCompleteAll(s string) bool {

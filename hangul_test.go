@@ -762,3 +762,52 @@ func TestEndsWith(t *testing.T) {
 		})
 	}
 }
+
+func TestSearch(t *testing.T) {
+	tests := []struct {
+		name   string
+		target string
+		needle string
+		result int
+	}{
+		{
+			name:   "\"도우미\", \"도움\"",
+			target: "도우미",
+			needle: "도움",
+			result: 0,
+		},
+		{
+			name:   "\"달걀\" \"닭\"",
+			target: "달걀",
+			needle: "닭",
+			result: 0,
+		},
+		{
+			name:   "\"도우미\" \"ㅜㅁ\"",
+			target: "도우미",
+			needle: "ㅜㅁ",
+			result: 3,
+		},
+		{
+			name:   "\"달맞이\" \"ㄹ마\"",
+			target: "달맞이",
+			needle: "ㄹ마",
+			result: 2,
+		},
+		{
+			name:   "\"달맞이\" \"ㅁㅈ\"",
+			target: "달맞이",
+			needle: "ㅁㅈ",
+			result: -1,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := Search(tt.target, tt.needle)
+			if !assert.Equal(t, tt.result, result) {
+				t.Errorf("Search() = %v, want %v", result, tt.result)
+			}
+		})
+	}
+}
