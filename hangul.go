@@ -182,11 +182,11 @@ func search(hd, nd []rune) int {
 
 	return -1
 }
-func Search(a, b string) int {
-	ad := Disassemble(a)
-	bd := Disassemble(b)
+func Search(haystack, needle string) int {
+	hd := Disassemble(haystack)
+	nd := Disassemble(needle)
 
-	return search(ad, bd)
+	return search(hd, nd)
 }
 
 type Range struct {
