@@ -160,8 +160,8 @@ func IsComplete(r rune) bool {
 
 type Searcher []rune
 
-func NewSearcher(haystack string) Searcher {
-	return Disassemble(haystack)
+func NewSearcher(needle string) Searcher {
+	return Disassemble(needle)
 }
 
 func (s Searcher) Search(haystack string) int {
