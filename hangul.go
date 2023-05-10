@@ -277,7 +277,6 @@ func buildHangul(arr []rune) (rune, int) {
 				jung = arr[0]
 				continue
 			} else {
-				// 초성 없음
 				return arr[0], step
 			}
 		} else if step == 2 {
