@@ -1,4 +1,4 @@
-module github.com/gyarang/hangul-go
+module github.com/gyarang/gohangul
 
 go 1.20
 
