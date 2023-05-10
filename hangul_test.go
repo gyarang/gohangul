@@ -763,6 +763,40 @@ func TestEndsWith(t *testing.T) {
 	}
 }
 
+func TestSearcher_Search(t *testing.T) {
+	s := NewSearcher("닭")
+	tests := []struct {
+		name   string
+		needle string
+		result int
+	}{
+		{
+			name:   "달걀",
+			needle: "달걀",
+			result: 0,
+		},
+		{
+			name:   "달구지",
+			needle: "달구지",
+			result: 0,
+		},
+		{
+			name:   "닮은",
+			needle: "닮은",
+			result: -1,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := s.Search(tt.needle)
+			if !assert.Equal(t, tt.result, result) {
+				t.Errorf("Search() = %v, want %v", result, tt.result)
+			}
+		})
+	}
+}
+
 func TestSearch(t *testing.T) {
 	tests := []struct {
 		name   string

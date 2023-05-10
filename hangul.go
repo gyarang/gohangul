@@ -158,21 +158,35 @@ func IsComplete(r rune) bool {
 	return r >= '가' && r <= '힣'
 }
 
-func Search(a, b string) int {
-	ad := Disassemble(a)
-	bd := Disassemble(b)
+type Searcher []rune
 
-	if len(ad) < len(bd) {
+func NewSearcher(haystack string) Searcher {
+	return Disassemble(haystack)
+}
+
+func (s Searcher) Search(haystack string) int {
+	hd := Disassemble(haystack)
+	return search(hd, s)
+}
+
+func search(hd, nd []rune) int {
+	if len(hd) < len(nd) {
 		return -1
 	}
 
-	for i := 0; i < len(ad)-len(bd)+1; i++ {
-		if string(ad[i:i+len(bd)]) == string(bd) {
+	for i := 0; i < len(hd)-len(nd)+1; i++ {
+		if string(hd[i:i+len(nd)]) == string(nd) {
 			return i
 		}
 	}
 
 	return -1
+}
+func Search(a, b string) int {
+	ad := Disassemble(a)
+	bd := Disassemble(b)
+
+	return search(ad, bd)
 }
 
 type Range struct {
