@@ -1,4 +1,4 @@
-package hangul_go
+package gohangul
 
 import (
 	"github.com/stretchr/testify/assert"
