@@ -175,6 +175,47 @@ func Search(a, b string) int {
 	return -1
 }
 
+type Range struct {
+	Start int
+	End   int
+}
+
+func RangeSearch(haystack string, needle string) []Range {
+	hd := Disassemble(haystack)
+	nd := Disassemble(needle)
+	ghd := DisassembleAsGroup(haystack)
+
+	var result []Range
+
+	if len(hd) < len(nd) || len(nd) == 0 {
+		return result
+	}
+
+	ghdIndex := 0
+	ghdIndexStart := 0
+	for i := 0; i < len(hd)-len(nd)+1; i++ {
+		// 실제 string 의 start index 계산
+		if i-ghdIndexStart >= len(ghd[ghdIndex]) {
+			ghdIndex++
+			ghdIndexStart = i
+		}
+
+		if string(hd[i:i+len(nd)]) == string(nd) {
+			// 실제 string 의 End index 계산
+			endGhdIndex := ghdIndex
+			endRemain := i - ghdIndexStart + len(nd) - len(ghd[ghdIndex])
+			for endRemain > 0 {
+				endGhdIndex++
+				endRemain -= len(ghd[endGhdIndex])
+			}
+
+			result = append(result, Range{ghdIndex, endGhdIndex})
+		}
+	}
+
+	return result
+}
+
 func IsCompleteAll(s string) bool {
 	for _, r := range s {
 		if !IsComplete(r) {

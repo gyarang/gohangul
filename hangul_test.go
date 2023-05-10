@@ -811,3 +811,58 @@ func TestSearch(t *testing.T) {
 		})
 	}
 }
+
+func TestRangeSearch(t *testing.T) {
+	haystack := "간장공장공장장"
+
+	tests := []struct {
+		name   string
+		needle string
+		result []Range
+	}{
+		{
+			name:   "갠",
+			needle: "갠",
+			result: nil,
+		},
+		{
+			name:   "간",
+			needle: "간",
+			result: []Range{{0, 0}},
+		},
+		{
+			name:   "장",
+			needle: "장",
+			result: []Range{{1, 1}, {3, 3}, {5, 5}, {6, 6}},
+		},
+		{
+			name:   "공장",
+			needle: "공장",
+			result: []Range{{2, 3}, {4, 5}},
+		},
+		{
+			name:   "ㅏㅇㄱ",
+			needle: "ㅏㅇㄱ",
+			result: []Range{{1, 2}, {3, 4}},
+		},
+		{
+			name:   "ㅇ공ㅈ",
+			needle: "ㅇ공ㅈ",
+			result: []Range{{1, 3}, {3, 5}},
+		},
+		{
+			name:   "empty",
+			needle: "",
+			result: nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := RangeSearch(haystack, tt.needle)
+			if !assert.Equal(t, tt.result, result) {
+				t.Errorf("RangeSearch() = %v, want %v", result, tt.result)
+			}
+		})
+	}
+}
