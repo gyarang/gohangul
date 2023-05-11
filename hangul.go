@@ -194,7 +194,7 @@ func NewSearcher(needle string) Searcher {
 	return Disassemble(needle)
 }
 
-// Searcher.Search 함수는 Search 함수와 동일하게 동작하지만 needle 값만 매개변수로 받습니다.
+// Searcher.Search 함수는 Search 함수와 동일하게 동작하지만 haystack 값만 매개변수로 받습니다.
 func (s Searcher) Search(haystack string) int {
 	hd := Disassemble(haystack)
 	return search(hd, s)
