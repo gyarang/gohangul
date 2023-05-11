@@ -115,6 +115,7 @@ var (
 	}
 )
 
+// Disassemble 함수는 string 을 받아서 각 글자를 자모음으로 분리한 뒤, rune slice 로 반환합니다.
 func Disassemble(input string) []rune {
 	var result []rune
 	for _, r := range input {
@@ -131,6 +132,7 @@ func Disassemble(input string) []rune {
 	return result
 }
 
+// DisassembleAsGroup 함수는 Disassemble 함수와 동일한 기능을 수행하지만, 각 글자를 자모음으로 분리한 뒤, 글자별로 rune slice 로 묶어서 반환합니다.
 func DisassembleAsGroup(input string) [][]rune {
 	result := make([][]rune, 0, len(input))
 	for _, r := range input {
@@ -144,6 +146,8 @@ func DisassembleAsGroup(input string) [][]rune {
 	return result
 }
 
+// Assemble 함수는 분리된 자모음이 포함된 rune slice 를 받아서, 이를 합쳐서 string 으로 반환합니다.
+// * 주의: Assemble 함수는 Disassemble 함수의 역함수가 아닙니다.
 func Assemble(input []rune) string {
 	var buf bytes.Buffer
 	for i := 0; i < len(input); {
@@ -154,19 +158,9 @@ func Assemble(input []rune) string {
 	return buf.String()
 }
 
+// IsComplete 함수는 rune 이 완성형 한글인지 아닌지를 판단합니다.
 func IsComplete(r rune) bool {
 	return r >= '가' && r <= '힣'
-}
-
-type Searcher []rune
-
-func NewSearcher(needle string) Searcher {
-	return Disassemble(needle)
-}
-
-func (s Searcher) Search(haystack string) int {
-	hd := Disassemble(haystack)
-	return search(hd, s)
 }
 
 func search(hd, nd []rune) int {
@@ -182,6 +176,9 @@ func search(hd, nd []rune) int {
 
 	return -1
 }
+
+// Search 함수는 haystack과 needle을 Disassemble 한 뒤 haystack 에서 needle과 동일한 부분을 찾아 시작 index를 반환합니다.
+// 만약 찾지 못했을 경우 -1을 반환합니다.
 func Search(haystack, needle string) int {
 	hd := Disassemble(haystack)
 	nd := Disassemble(needle)
@@ -189,11 +186,27 @@ func Search(haystack, needle string) int {
 	return search(hd, nd)
 }
 
+// Searcher 는 동일한 문자열에 Search 함수를 반복해서 사용시 불필요한 Disassemble 과정을 생략하기 위한 타입입니다.
+type Searcher []rune
+
+// NewSearcher 함수는 반복되는 Search 를 위한 문자열의 Searcher 를 생성합니다.
+func NewSearcher(needle string) Searcher {
+	return Disassemble(needle)
+}
+
+// Searcher.Search 함수는 Search 함수와 동일하게 동작하지만 needle 값만 매개변수로 받습니다.
+func (s Searcher) Search(haystack string) int {
+	hd := Disassemble(haystack)
+	return search(hd, s)
+}
+
 type Range struct {
 	Start int
 	End   int
 }
 
+// RangeSearch 함수는 Search 함수와 동일하게 동작하지만, needle이 포함된 모든 문자열의 실제 index 값을 기준으로 Range 를 반환합니다.
+// 만약 찾지 못했을 경우 nil 을 반환합니다.
 func RangeSearch(haystack string, needle string) []Range {
 	hd := Disassemble(haystack)
 	nd := Disassemble(needle)
@@ -230,6 +243,7 @@ func RangeSearch(haystack string, needle string) []Range {
 	return result
 }
 
+// IsCompleteAll 주어진 문자열이 각각 전부 완성형 한글인지 여부를 반환합니다.
 func IsCompleteAll(s string) bool {
 	for _, r := range s {
 		if !IsComplete(r) {
@@ -239,11 +253,13 @@ func IsCompleteAll(s string) bool {
 	return true
 }
 
+// IsConsonant 주어진 rune 이 자음인지 여부를 반환합니다.
 func IsConsonant(r rune) bool {
 	_, ok := consonantsMap[r]
 	return ok
 }
 
+// IsConsonantAll 주어진 문자열이 각각 전부 자음인지 여부를 반환합니다.
 func IsConsonantAll(s string) bool {
 	for _, r := range s {
 		if !IsConsonant(r) {
@@ -253,11 +269,13 @@ func IsConsonantAll(s string) bool {
 	return true
 }
 
+// IsVowel 주어진 rune 이 모음인지 여부를 반환합니다.
 func IsVowel(r rune) bool {
 	_, ok := jungMap[r]
 	return ok
 }
 
+// IsVowelAll 주어진 문자열이 각각 전부 모음인지 여부를 반환합니다.
 func IsVowelAll(s string) bool {
 	for _, r := range s {
 		if !IsVowel(r) {
@@ -267,11 +285,13 @@ func IsVowelAll(s string) bool {
 	return true
 }
 
+// IsCho 주어진 rune 이 초성으로 사용될 수 있는지 여부를 반환합니다.
 func IsCho(r rune) bool {
 	_, ok := choMap[r]
 	return ok
 }
 
+// IsChoAll 주어진 문자열이 각각 전부 초성으로 사용될 수 있는지 여부를 반환합니다.
 func IsChoAll(s string) bool {
 	for _, r := range s {
 		if !IsCho(r) {
@@ -281,11 +301,13 @@ func IsChoAll(s string) bool {
 	return true
 }
 
+// IsJong 주어진 rune 이 종성으로 사용될 수 있는지 여부를 반환합니다.
 func IsJong(r rune) bool {
 	_, ok := jongMap[r]
 	return ok
 }
 
+// IsJongAll 주어진 문자열이 각각 전부 종성으로 사용될 수 있는지 여부를 반환합니다.
 func IsJongAll(s string) bool {
 	for _, r := range s {
 		if !IsJong(r) {
@@ -295,6 +317,7 @@ func IsJongAll(s string) bool {
 	return true
 }
 
+// EndsWithConsonant 주어진 문자열이 각각 전부 자음으로 끝나는지 여부를 반환합니다. 은/는, 이/가 구분에 사용할 수 있습니다.
 func EndsWithConsonant(s string) bool {
 	runes := []rune(s)
 	r := runes[len(runes)-1]
@@ -306,6 +329,8 @@ func EndsWithConsonant(s string) bool {
 	return IsConsonant(r)
 }
 
+// EndsWith 함수는 주어진 문자열 input 이 target 으로 끝나는지 여부를 반환합니다.
+// 로/으로 구분에 사용할 수 있습니다.
 func EndsWith(input string, target rune) bool {
 	disassembled := Disassemble(input)
 	return disassembled[len(disassembled)-1] == target
