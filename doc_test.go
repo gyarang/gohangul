@@ -29,7 +29,7 @@ func ExampleDisassemble() {
 func ExampleDisassembleAsGroup() {
 	dism := DisassembleAsGroup("안녕") // Default
 	printRuneGroups(dism)            // [][]rune{{'ㅇ', 'ㅏ', 'ㄴ'}, {'ㄴ', 'ㅕ', 'ㅇ'}}
-	// ㅇㅏㄴ ㄴㅕㅇ
+	// Output: ㅇㅏㄴ ㄴㅕㅇ
 }
 
 func ExampleAssemble() {
