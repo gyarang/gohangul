@@ -10,8 +10,10 @@ func printRunes(runes []rune) {
 }
 
 func printRuneGroups(runes [][]rune) {
-	for _, r := range runes {
-		printRunes(r)
+	for _, slice := range runes {
+		for _, r := range slice {
+			fmt.Print(string(r))
+		}
 		fmt.Print(" ")
 	}
 	fmt.Println()
