@@ -169,7 +169,7 @@ func search(hd, nd []rune) int {
 	}
 
 	for i := 0; i < len(hd)-len(nd)+1; i++ {
-		if string(hd[i:i+len(nd)]) == string(nd) {
+		if compareRuneSlice(hd[i:i+len(nd)], nd) {
 			return i
 		}
 	}
@@ -227,7 +227,7 @@ func RangeSearch(haystack string, needle string) []Range {
 			ghdIndexStart = i
 		}
 
-		if string(hd[i:i+len(nd)]) == string(nd) {
+		if compareRuneSlice(hd[i:i+len(nd)], nd) {
 			// 실제 string 의 End index 계산
 			endGhdIndex := ghdIndex
 			endRemain := i - ghdIndexStart + len(nd) - len(ghd[ghdIndex])
@@ -589,4 +589,16 @@ func canJaumMixed(r1, r2 rune) (bool, rune) {
 	} else {
 		return false, 0
 	}
+}
+
+func compareRuneSlice(s1, s2 []rune) bool {
+	if len(s1) != len(s2) {
+		return false
+	}
+	for i, v := range s1 {
+		if v != s2[i] {
+			return false
+		}
+	}
+	return true
 }
