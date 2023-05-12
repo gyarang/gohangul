@@ -13,8 +13,8 @@ go get github.com/gyarang/gohangul
 package main
 
 import (
-    "fmt"
-    "github.com/gyarang/gohangul"
+	"fmt"
+	"github.com/gyarang/gohangul"
 )
 
 func main() {
