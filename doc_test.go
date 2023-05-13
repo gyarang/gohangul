@@ -78,7 +78,7 @@ func ExampleRangeSearch() {
 	fmt.Println(RangeSearch(haystack, "장"))
 	fmt.Println(RangeSearch(haystack, "ㅇ공ㅈ"))
 	fmt.Println(RangeSearch(haystack, "갠"))
-	// Output [{1 1} {3 3} {5 5} {6 6}]
+	// Output: [{1 1} {3 3} {5 5} {6 6}]
 	// [{1 3} {3 5}]
 	// []
 }
