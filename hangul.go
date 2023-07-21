@@ -5,41 +5,10 @@ import (
 )
 
 var (
-	choArr        = [19]rune{'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'}
-	jungArr       = [21]rune{'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'}
-	jongArr       = [28]rune{0, 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'}
-	consonantsMap = map[rune]struct{}{
-		'ㄱ': {},
-		'ㄲ': {},
-		'ㄳ': {},
-		'ㄴ': {},
-		'ㄵ': {},
-		'ㄶ': {},
-		'ㄷ': {},
-		'ㄸ': {},
-		'ㄹ': {},
-		'ㄺ': {},
-		'ㄻ': {},
-		'ㄼ': {},
-		'ㄽ': {},
-		'ㄾ': {},
-		'ㄿ': {},
-		'ㅀ': {},
-		'ㅁ': {},
-		'ㅂ': {},
-		'ㅃ': {},
-		'ㅄ': {},
-		'ㅅ': {},
-		'ㅆ': {},
-		'ㅇ': {},
-		'ㅈ': {},
-		'ㅉ': {},
-		'ㅊ': {},
-		'ㅋ': {},
-		'ㅌ': {},
-		'ㅍ': {},
-		'ㅎ': {},
-	}
+	choArr  = [19]rune{'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'}
+	jungArr = [21]rune{'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'}
+	jongArr = [28]rune{0, 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'}
+
 	choMap = map[rune]int{
 		'ㄱ': 0,
 		'ㄲ': 1,
@@ -112,6 +81,81 @@ var (
 		'ㅌ': 25,
 		'ㅍ': 26,
 		'ㅎ': 27,
+	}
+
+	consonantsMap = map[rune]struct{}{
+		'ㄱ': {},
+		'ㄲ': {},
+		'ㄳ': {},
+		'ㄴ': {},
+		'ㄵ': {},
+		'ㄶ': {},
+		'ㄷ': {},
+		'ㄸ': {},
+		'ㄹ': {},
+		'ㄺ': {},
+		'ㄻ': {},
+		'ㄼ': {},
+		'ㄽ': {},
+		'ㄾ': {},
+		'ㄿ': {},
+		'ㅀ': {},
+		'ㅁ': {},
+		'ㅂ': {},
+		'ㅃ': {},
+		'ㅄ': {},
+		'ㅅ': {},
+		'ㅆ': {},
+		'ㅇ': {},
+		'ㅈ': {},
+		'ㅉ': {},
+		'ㅊ': {},
+		'ㅋ': {},
+		'ㅌ': {},
+		'ㅍ': {},
+		'ㅎ': {},
+	}
+	mixedJaumMap = map[string]rune{
+		"ㄱㅅ": 'ㄳ',
+		"ㄴㅈ": 'ㄵ',
+		"ㄴㅎ": 'ㄶ',
+		"ㄹㄱ": 'ㄺ',
+		"ㄹㅁ": 'ㄻ',
+		"ㄹㅂ": 'ㄼ',
+		"ㄹㅅ": 'ㄽ',
+		"ㄹㅌ": 'ㄾ',
+		"ㄹㅍ": 'ㄿ',
+		"ㄹㅎ": 'ㅀ',
+		"ㅂㅅ": 'ㅄ',
+	}
+	mixedMoumMap = map[string]rune{
+		"ㅗㅏ": 'ㅘ',
+		"ㅗㅐ": 'ㅙ',
+		"ㅗㅣ": 'ㅚ',
+		"ㅜㅓ": 'ㅝ',
+		"ㅜㅔ": 'ㅞ',
+		"ㅜㅣ": 'ㅟ',
+		"ㅡㅣ": 'ㅢ',
+	}
+	splitMixedJamoMap = map[rune][]rune{
+		'ㄳ': {'ㄱ', 'ㅅ'},
+		'ㄵ': {'ㄴ', 'ㅈ'},
+		'ㄶ': {'ㄴ', 'ㅎ'},
+		'ㄺ': {'ㄹ', 'ㄱ'},
+		'ㄻ': {'ㄹ', 'ㅁ'},
+		'ㄼ': {'ㄹ', 'ㅂ'},
+		'ㄽ': {'ㄹ', 'ㅅ'},
+		'ㄾ': {'ㄹ', 'ㅌ'},
+		'ㄿ': {'ㄹ', 'ㅍ'},
+		'ㅀ': {'ㄹ', 'ㅎ'},
+		'ㅄ': {'ㅂ', 'ㅅ'},
+		'ㅘ': {'ㅗ', 'ㅏ'},
+		'ㅙ': {'ㅗ', 'ㅐ'},
+		'ㅚ': {'ㅗ', 'ㅣ'},
+		'ㅝ': {'ㅜ', 'ㅓ'},
+		'ㅞ': {'ㅜ', 'ㅔ'},
+		'ㅟ': {'ㅜ', 'ㅣ'},
+		'ㅢ': {'ㅡ', 'ㅣ'},
 	}
 )
 
@@ -501,94 +545,26 @@ func disassembleHangul(r rune) []rune {
 }
 
 func splitMixedJamo(r rune) []rune {
-	switch r {
-	case 'ㄳ':
-		return []rune{'ㄱ', 'ㅅ'}
-	case 'ㄵ':
-		return []rune{'ㄴ', 'ㅈ'}
-	case 'ㄶ':
-		return []rune{'ㄴ', 'ㅎ'}
-	case 'ㄺ':
-		return []rune{'ㄹ', 'ㄱ'}
-	case 'ㄻ':
-		return []rune{'ㄹ', 'ㅁ'}
-	case 'ㄼ':
-		return []rune{'ㄹ', 'ㅂ'}
-	case 'ㄽ':
-		return []rune{'ㄹ', 'ㅅ'}
-	case 'ㄾ':
-		return []rune{'ㄹ', 'ㅌ'}
-	case 'ㄿ':
-		return []rune{'ㄹ', 'ㅍ'}
-	case 'ㅀ':
-		return []rune{'ㄹ', 'ㅎ'}
-	case 'ㅄ':
-		return []rune{'ㅂ', 'ㅅ'}
-	case 'ㅘ':
-		return []rune{'ㅗ', 'ㅏ'}
-	case 'ㅙ':
-		return []rune{'ㅗ', 'ㅐ'}
-	case 'ㅚ':
-		return []rune{'ㅗ', 'ㅣ'}
-	case 'ㅝ':
-		return []rune{'ㅜ', 'ㅓ'}
-	case 'ㅞ':
-		return []rune{'ㅜ', 'ㅔ'}
-	case 'ㅟ':
-		return []rune{'ㅜ', 'ㅣ'}
-	case 'ㅢ':
-		return []rune{'ㅡ', 'ㅣ'}
-	default:
-		return []rune{r}
+	if split, ok := splitMixedJamoMap[r]; ok {
+		return split
 	}
+	return []rune{r}
 }
 
 func canMoumMixed(r1, r2 rune) (bool, rune) {
-	if r1 == 'ㅗ' && r2 == 'ㅏ' {
-		return true, 'ㅘ'
-	} else if r1 == 'ㅜ' && r2 == 'ㅓ' {
-		return true, 'ㅝ'
-	} else if r1 == 'ㅗ' && r2 == 'ㅐ' {
-		return true, 'ㅙ'
-	} else if r1 == 'ㅜ' && r2 == 'ㅔ' {
-		return true, 'ㅞ'
-	} else if r1 == 'ㅡ' && r2 == 'ㅣ' {
-		return true, 'ㅢ'
-	} else if r1 == 'ㅗ' && r2 == 'ㅣ' {
-		return true, 'ㅚ'
-	} else if r1 == 'ㅜ' && r2 == 'ㅣ' {
-		return true, 'ㅟ'
-	} else {
-		return false, 0
+	combination := string([]rune{r1, r2})
+	if mixed, ok := mixedMoumMap[combination]; ok {
+		return true, mixed
 	}
+	return false, 0
 }
 
 func canJaumMixed(r1, r2 rune) (bool, rune) {
-	if r1 == 'ㄱ' && r2 == 'ㅅ' {
-		return true, 'ㄳ'
-	} else if r1 == 'ㄴ' && r2 == 'ㅈ' {
-		return true, 'ㄵ'
-	} else if r1 == 'ㄴ' && r2 == 'ㅎ' {
-		return true, 'ㄶ'
-	} else if r1 == 'ㄹ' && r2 == 'ㄱ' {
-		return true, 'ㄺ'
-	} else if r1 == 'ㄹ' && r2 == 'ㅁ' {
-		return true, 'ㄻ'
-	} else if r1 == 'ㄹ' && r2 == 'ㅂ' {
-		return true, 'ㄼ'
-	} else if r1 == 'ㄹ' && r2 == 'ㅅ' {
-		return true, 'ㄽ'
-	} else if r1 == 'ㄹ' && r2 == 'ㅌ' {
-		return true, 'ㄾ'
-	} else if r1 == 'ㄹ' && r2 == 'ㅍ' {
-		return true, 'ㄿ'
-	} else if r1 == 'ㄹ' && r2 == 'ㅎ' {
-		return true, 'ㅀ'
-	} else if r1 == 'ㅂ' && r2 == 'ㅅ' {
-		return true, 'ㅄ'
-	} else {
-		return false, 0
+	combination := string([]rune{r1, r2})
+	if mixed, ok := mixedJaumMap[combination]; ok {
+		return true, mixed
 	}
+	return false, 0
 }
 
 func compareRuneSlice(s1, s2 []rune) bool {
