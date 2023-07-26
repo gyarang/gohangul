@@ -393,7 +393,8 @@ func buildHangul(arr []rune) (rune, int) {
 	}
 
 	for step := 1; step <= len(arr); step++ {
-		if step == 1 {
+		switch step {
+		case 1:
 			if _, ok := choMap[arr[0]]; ok {
 				cho = arr[0]
 				continue
@@ -403,7 +404,8 @@ func buildHangul(arr []rune) (rune, int) {
 			} else {
 				return arr[0], step
 			}
-		} else if step == 2 {
+
+		case 2:
 			// 가능한 상황: [초성], [중성]
 			if _, ok := jungMap[arr[1]]; ok {
 				if cho == 0 {
@@ -428,8 +430,8 @@ func buildHangul(arr []rune) (rune, int) {
 			} else {
 				return arr[0], step - 1
 			}
-		} else if step == 3 {
-			// 가능한 상황: [초성, 중성], [중성, 중성]
+
+		case 3:
 			if _, ok := jungMap[arr[2]]; ok {
 				if cho == 0 {
 					// [중성, 중성] + 모음 상황 (종료)
@@ -452,8 +454,8 @@ func buildHangul(arr []rune) (rune, int) {
 			} else {
 				return generateHangul(), step - 1
 			}
-		} else if step == 4 {
-			// 가능한 상황: [초성, 중성, 종성], [초성, (중성, 중성)]
+
+		case 4:
 			if _, ok := jongMap[arr[3]]; ok {
 				if jong == 0 {
 					// [초성, (중성, 중성)] + 종성 상황
@@ -488,8 +490,8 @@ func buildHangul(arr []rune) (rune, int) {
 			} else {
 				return generateHangul(), step - 1
 			}
-		} else if step == 5 {
-			// 가능한 상황: [초성, 중성, (종성, 종성)], [초성, (중성, 중성), 종성]
+
+		case 5:
 			if _, ok := jongMap[arr[4]]; ok {
 				if isMixed, mixed := canJaumMixed(jong, arr[4]); isMixed {
 					// [초성, (중성, 중성), 종성] + 종성(조합 가능) 상황 (종료)
@@ -514,8 +516,8 @@ func buildHangul(arr []rune) (rune, int) {
 			} else {
 				return generateHangul(), step - 1
 			}
-		} else if step == 6 {
-			// 가능한 상황 [초성, (중성, 중성), (종성, 종성)]
+
+		case 6:
 			if _, ok := jungMap[arr[5]]; ok {
 				splitJong := splitMixedJamo(jong)
 				jong = splitJong[0]
